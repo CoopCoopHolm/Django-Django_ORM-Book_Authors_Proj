@@ -1,0 +1,77 @@
+>>> from books_authors_app.models import books, authors
+>>> books.objects.create(title = "C Sharp", desc = "Language")
+<books: books object (1)>
+>>> books.objects.create(title = "Java", desc = "Language")
+<books: books object (2)>
+>>> books.objects.create(title = "Python", desc = "Language")
+<books: books object (3)>
+>>> books.objects.create(title = "PHP", desc = "Language")
+<books: books object (4)>
+>>> books.objects.create(title = "Ruby", desc = "Language")
+<books: books object (5)>
+
+>>> authors.objects.create(first_name = "Jane", last_name = "Austen")
+<authors: authors object (1)>
+>>> authors.objects.create(first_name = "Emily", last_name = "Dickenson")
+<authors: authors object (2)>
+>>> authors.objects.create(first_name = "Fyodor", last_name = "Dostoevsky")
+<authors: authors object (3)>
+>>> authors.objects.create(first_name = "William", last_name = "Shakespeare")
+<authors: authors object (4)>
+>>> authors.objects.create(first_name = "Lau", last_name = "Tzu")
+<authors: authors object (5)>
+
+>>> n = books.objects.first()
+>>> n.title = "C#"
+>>> n.title
+'C#'
+
+>>> n = authors.objects.get(id=4)
+>>> n.first_name = "Bill"
+>>> n.first_name
+'Bill'
+
+>>> this_author = authors.objects.first()
+>>> this_author.books.add(books.objects.get(id=1), books.objects.get(id=2))
+>>> this_author.books.all()
+<QuerySet [<books: books object (1)>, <books: books object (2)>]>
+
+>>> this_author = authors.objects.get(id=2)
+>>> this_author.books.add(books.objects.get(id=1), books.objects.get(id=2), books.objects.get(id=3))
+>>> this_author.books.all()
+<QuerySet [<books: books object (1)>, <books: books object (2)>, <books: books object (3)>]>
+
+>>> this_author = authors.objects.get(id=3)
+>>> this_author.books.add(books.objects.get(id=1), books.objects.get(id=2), books.objects.get(id=3), books.objects.get(id=4))
+>>> this_author.books.all()
+<QuerySet [<books: books object (1)>, <books: books object (2)>, <books: books object (3)>, <books: books object (4)>]>
+
+>>> this_author = authors.objects.get(id=4)
+>>> this_author.books.add(books.objects.get(id=1), books.objects.get(id=2), books.objects.get(id=3), books.objects.get(id=4), books.objects.get(id=5))
+>>> this_author.books.all()
+<QuerySet [<books: books object (1)>, <books: books object (2)>, <books: books object (3)>, <books: books object (4)>, <books: books object (5)>]>
+
+>>> n = books.objects.get(id=3)
+>>> n.authors.all()
+<QuerySet [<authors: authors object (2)>, <authors: authors object (3)>, <authors: authors object (4)>]>
+
+>>> n = books.objects.get(id=3)
+>>> a = authors.objects.get(id=2)
+>>> n.authors.remove(a)
+>>> n.authors.all()
+<QuerySet [<authors: authors object (3)>, <authors: authors object (4)>]>
+
+>>> n = books.objects.get(id=2)
+>>> a = authors.objects.get(id=5)
+>>> n.authors.add(a)
+>>> n.authors.all()
+<QuerySet [<authors: authors object (1)>, <authors: authors object (2)>, <authors: authors object (3)>, <authors: authors object (4)>, <authors: authors object (5)>]>
+
+>>> a = authors.objects.get(id=3)
+>>> a.books.all()
+<QuerySet [<books: books object (1)>, <books: books object (2)>, <books: books object (3)>, <books: books object (4)>]>
+
+>>> c = books.objects.get(id=5)
+>>> c.authors.all()
+<QuerySet [<authors: authors object (4)>]>
+
